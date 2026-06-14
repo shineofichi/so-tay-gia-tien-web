@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
 
+import { StructuredData } from "../components/structured-data";
 import { SiteFooter, SiteTopBar } from "../components/subpage-chrome";
+import { absoluteUrl, buildMetadata, siteConfig } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Chính sách quyền riêng tư - Sổ tay gia tiên",
+export const metadata: Metadata = buildMetadata({
+  title: "Chính sách quyền riêng tư",
   description:
-    "Chính sách quyền riêng tư của Sổ tay gia tiên, bao gồm thu thập dữ liệu, sử dụng dữ liệu, quảng cáo Google AdMob và quyền của người dùng.",
-};
+    "Chính sách quyền riêng tư của Sổ tay gia tiên về thu thập, sử dụng, lưu trữ dữ liệu người dùng và quyền riêng tư của gia đình.",
+  path: "/dieu-khoan-bao-mat",
+  keywords: [
+    "chính sách quyền riêng tư",
+    "bảo mật dữ liệu gia phả",
+    "quyền riêng tư sổ tay gia tiên",
+  ],
+});
 
 type LegalSection = {
   heading: string;
@@ -30,10 +38,10 @@ const privacySections: LegalSection[] = [
       "Thông tin tài khoản và định danh: thông tin đăng nhập Google, mã định danh tài khoản Firebase/Google, họ tên, email và ảnh đại diện tài khoản Google.",
       "Thông tin hồ sơ do bạn cung cấp: họ và tên, địa chỉ hiện tại, quê quán/gốc tích, số điện thoại nếu bạn chủ động nhập và các thông tin hồ sơ khác mà bạn cập nhật trong ứng dụng.",
       "Dữ liệu nội dung do bạn tạo: dữ liệu sự kiện gia tiên như ngày giỗ, sinh thần, lễ tiết, tên sự kiện, mối quan hệ, địa điểm, ngày âm lịch/ngày dương lịch; nội dung bài văn khấn, bài khấn tùy chỉnh hoặc nội dung bạn chỉnh sửa; các thiết lập nhắc việc và tùy chọn cá nhân hóa.",
-      "Dữ liệu phát sinh khi sử dụng tính năng âm thanh: khi bạn dùng tính năng chuyển văn bản thành giọng nói (TTS), nội dung văn bản bạn yêu cầu đọc có thể được gửi tới máy chủ TTS để tạo tệp âm thanh trả về cho thiết bị của bạn.",
+      "Dữ liệu phát sinh khi sử dụng tính năng âm thanh: khi bạn dùng tính năng chuyển văn bản thành giọng nói, nội dung văn bản bạn yêu cầu đọc có thể được gửi tới máy chủ TTS để tạo tệp âm thanh trả về cho thiết bị của bạn.",
       "Dữ liệu kỹ thuật và bảo mật: thông tin xác thực cần thiết để đăng nhập và duy trì phiên làm việc, mã bảo mật ứng dụng, mã kiểm tra chống lạm dụng và dữ liệu lỗi hoặc nhật ký kỹ thuật phục vụ vận hành hệ thống.",
       "Dữ liệu liên quan đến quảng cáo: nếu ứng dụng tích hợp Google AdMob hoặc các dịch vụ quảng cáo của Google, một số dữ liệu có thể được thu thập hoặc xử lý để phân phối, đo lường và chống gian lận quảng cáo, bao gồm mã định danh quảng cáo, địa chỉ IP, thông tin thiết bị, dữ liệu chẩn đoán và dữ liệu tương tác với quảng cáo.",
-      "Dữ liệu lưu cục bộ trên thiết bị: tùy chọn giao diện, cài đặt ứng dụng, nội dung bài khấn tùy chỉnh hoặc bản nháp, tùy chọn bật/tắt thông báo nhắc việc, tệp âm thanh tạm thời hoặc bộ nhớ đệm.",
+      "Dữ liệu lưu cục bộ trên thiết bị: tùy chọn giao diện, cài đặt ứng dụng, nội dung bài khấn tùy chỉnh hoặc bản nháp, tùy chọn bật tắt thông báo nhắc việc, tệp âm thanh tạm thời hoặc bộ nhớ đệm.",
     ],
   },
   {
@@ -145,81 +153,115 @@ const privacySections: LegalSection[] = [
       "Email: tuananh.k58@gmail.com",
     ],
   },
-  // {
-  //   heading: "15. Ghi chú triển khai cho Play Store",
-  //   bullets: [
-  //     "Cập nhật đầy đủ tên pháp nhân hoặc cá nhân phát hành ứng dụng.",
-  //     "Cập nhật email hỗ trợ và địa chỉ liên hệ thật.",
-  //     "Cập nhật URL công khai của trang chính sách quyền riêng tư.",
-  //     "Cập nhật thông tin về máy chủ TTS hoặc nhà cung cấp hạ tầng thực tế nếu bạn muốn công bố chi tiết hơn.",
-  //     "Cập nhật cách triển khai Google AdMob thực tế, bao gồm quảng cáo cá nhân hóa hay không, cơ chế xin consent nếu áp dụng, và loại dữ liệu bạn khai báo trong mục Data safety của Google Play.",
-  //   ],
-  //   paragraphs: [
-  //     "Nếu bạn khai báo trong mục Data safety của Google Play, nội dung khai báo phải nhất quán với chính sách quyền riêng tư này và với hành vi thu thập, xử lý dữ liệu thực tế của ứng dụng.",
-  //   ],
-  // },
 ];
+
+function sectionId(heading: string) {
+  return heading
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\./g, "")
+    .replace(/đ/g, "d")
+    .replace(/\s+/g, "-");
+}
+
+const legalSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": absoluteUrl("/dieu-khoan-bao-mat#webpage"),
+      url: absoluteUrl("/dieu-khoan-bao-mat"),
+      name: `Chính sách quyền riêng tư | ${siteConfig.name}`,
+      description:
+        "Chính sách quyền riêng tư của Sổ tay gia tiên về thu thập, sử dụng và bảo vệ dữ liệu người dùng.",
+      inLanguage: "vi-VN",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Trang chủ",
+          item: absoluteUrl("/"),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Chính sách quyền riêng tư",
+          item: absoluteUrl("/dieu-khoan-bao-mat"),
+        },
+      ],
+    },
+  ],
+};
 
 export default function LegalPage() {
   return (
     <main className="subpage-shell">
+      <StructuredData data={legalSchema} />
       <SiteTopBar currentPath="/dieu-khoan-bao-mat" />
 
       <div className="subpage-main legal-page">
-        <section className="legal-hero">
-          <h1>Chính sách quyền riêng tư</h1>
+        <section className="subpage-hero legal-hero">
+          <p className="subpage-kicker">Chính sách quyền riêng tư</p>
+          <h1>Thông tin quan trọng được trình bày rõ ràng để gia đình dễ theo dõi.</h1>
           <p>
-            Ngày có hiệu lực: 30/05/2026. Chính sách này mô tả cách Sổ Tay Gia
-            Tiên thu thập, sử dụng, lưu trữ, chia sẻ và bảo vệ thông tin của
-            người dùng.
+            Ngày có hiệu lực: 30/05/2026. Chính sách này mô tả cách Sổ tay gia
+            tiên thu thập, sử dụng, lưu trữ, chia sẻ và bảo vệ thông tin người
+            dùng.
           </p>
-          <div className="legal-seal" aria-hidden="true">
-            STGT
-          </div>
         </section>
 
         <div className="legal-layout">
           <aside className="legal-sidebar">
-            <a className="active" href="#bao-mat">
-              Chính sách quyền riêng tư
+            <a className="active" href="#tong-quan">
+              Tổng quan
             </a>
+            {privacySections.map((section) => (
+              <a key={section.heading} href={`#${sectionId(section.heading)}`}>
+                {section.heading}
+              </a>
+            ))}
           </aside>
 
           <article className="legal-content">
-            <section className="legal-section" id="bao-mat">
+            <section className="legal-block" id="tong-quan">
               <h2>Chính sách quyền riêng tư</h2>
-              <div className="legal-block">
-                <p>
-                  <strong>Ứng dụng:</strong> Sổ Tay Gia Tiên
-                </p>
-                <p>
-                  Chính sách quyền riêng tư này mô tả cách ứng dụng Sổ Tay Gia
-                  Tiên ("Ứng dụng", "chúng tôi") thu thập, sử dụng, lưu trữ,
-                  chia sẻ và bảo vệ thông tin của người dùng khi bạn cài đặt
-                  hoặc sử dụng ứng dụng.
-                </p>
-                <p>
-                  Khi sử dụng ứng dụng, bạn xác nhận đã đọc và đồng ý với nội
-                  dung của chính sách quyền riêng tư này.
-                </p>
-              </div>
-
-              {privacySections.map((item) => (
-                <div key={item.heading} className="legal-block">
-                  <h3>{item.heading}</h3>
-                  {item.paragraphs?.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                  {item.bullets ? (
-                    <ul>
-                      {item.bullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              ))}
+              <p>
+                <strong>Ứng dụng:</strong> Sổ Tay Gia Tiên
+              </p>
+              <p>
+                Chính sách quyền riêng tư này mô tả cách ứng dụng Sổ Tay Gia
+                Tiên thu thập, sử dụng, lưu trữ, chia sẻ và bảo vệ thông tin của
+                người dùng khi bạn cài đặt hoặc sử dụng ứng dụng.
+              </p>
+              <p>
+                Khi sử dụng ứng dụng, bạn xác nhận đã đọc và đồng ý với nội dung
+                của chính sách quyền riêng tư này.
+              </p>
             </section>
+
+            {privacySections.map((item) => (
+              <section
+                key={item.heading}
+                className="legal-block"
+                id={sectionId(item.heading)}
+              >
+                <h3>{item.heading}</h3>
+                {item.paragraphs?.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {item.bullets ? (
+                  <ul>
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </section>
+            ))}
           </article>
         </div>
       </div>
