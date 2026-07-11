@@ -4,22 +4,23 @@ export const siteConfig = {
   name: "Sổ tay gia tiên",
   shortName: "Sổ tay gia tiên",
   url: "https://sotaygiatien.io.vn",
-  title: "Sổ tay gia tiên | Lập gia phả và quản lý ngày giỗ cho gia đình Việt",
+  title: "Sổ tay gia tiên | Lịch âm, lễ giỗ và văn khấn cho gia đình Việt",
   description:
-    "Sổ tay gia tiên giúp gia đình Việt lập gia phả, quản lý ngày giỗ, lưu giữ ký ức và kết nối các thế hệ trong một nơi riêng tư, dễ tiếp nối.",
+    "Sổ tay gia tiên giúp xem lịch âm, lưu ngày lễ giỗ, tìm văn khấn và nghe giọng đọc AI trong một ứng dụng dễ sử dụng.",
   keywords: [
     "sổ tay gia tiên",
-    "lập gia phả",
-    "gia phả online",
+    "lịch âm",
+    "lịch âm Việt Nam",
     "quản lý ngày giỗ",
     "ngày giỗ gia đình",
     "văn khấn",
-    "ứng dụng gia phả",
+    "giọng đọc văn khấn",
+    "ứng dụng văn khấn",
     "gia đình Việt",
-    "lưu giữ ký ức gia đình",
+    "nhắc ngày lễ giỗ",
   ],
   locale: "vi_VN",
-  ogImage: "/hero-tree.jpg",
+  ogImage: "/app-home.png",
 };
 
 export function absoluteUrl(path = "/") {
@@ -58,9 +59,9 @@ export function buildMetadata({
       images: [
         {
           url: absoluteUrl(siteConfig.ogImage),
-          width: 1024,
-          height: 1024,
-          alt: "Minh họa cây gia phả của Sổ tay gia tiên",
+          width: 1600,
+          height: 1200,
+          alt: "Trang chủ ứng dụng Sổ tay gia tiên",
         },
       ],
     },

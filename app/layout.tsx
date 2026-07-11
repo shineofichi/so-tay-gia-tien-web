@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  category: "family history",
+  category: "lifestyle",
   referrer: "origin-when-cross-origin",
   authors: [{ name: "Trương Tuấn Anh" }],
   creator: siteConfig.name,
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: absoluteUrl(siteConfig.ogImage),
-        width: 1024,
-        height: 1024,
-        alt: "Minh họa cây gia phả của Sổ tay gia tiên",
+        width: 1600,
+        height: 1200,
+        alt: "Trang chủ ứng dụng Sổ tay gia tiên",
       },
     ],
   },
